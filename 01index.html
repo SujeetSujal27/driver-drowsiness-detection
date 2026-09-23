@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Driver Drowsiness Detection</title>
+
+    <link rel="stylesheet" href="02style.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header>
+
+        <div class="logo">
+            🚗 DrowsyGuard
+        </div>
+
+        <div class="system-status">
+
+            <span class="status-dot"></span>
+
+            <span id="headerStatus">
+                System Ready
+            </span>
+
+        </div>
+
+    </header>
+
+
+    <!-- MAIN -->
+
+    <main>
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <h1>
+                Driver Drowsiness Detection
+            </h1>
+
+            <p>
+                Real-time monitoring system designed
+                to detect driver drowsiness and provide
+                an alert.
+            </p>
+
+        </section>
+
+
+        <!-- DASHBOARD -->
+
+        <section class="dashboard">
+
+            <!-- CAMERA -->
+
+            <div class="camera-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Driver Camera
+                    </h2>
+
+                    <span class="camera-status">
+                        Camera Offline
+                    </span>
+
+                </div>
+
+
+                <div class="camera-container">
+
+                    <video
+                        id="camera"
+                        autoplay
+                        playsinline>
+                    </video>
+
+
+                    <div
+                        class="camera-placeholder"
+                        id="cameraPlaceholder">
+
+                        <div class="camera-icon">
+                            📷
+                        </div>
+
+                        <h3>
+                            Camera Not Started
+                        </h3>
+
+                        <p>
+                            Click "Start Monitoring"
+                            to activate the camera.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="camera-controls">
+
+                    <button
+                        id="startBtn"
+                        class="start-btn">
+
+                        ▶ Start Monitoring
+
+                    </button>
+
+
+                    <button
+                        id="stopBtn"
+                        class="stop-btn">
+
+                        ■ Stop Monitoring
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- DRIVER STATUS -->
+
+            <div class="status-card">
+
+                <h2>
+                    Driver Status
+                </h2>
+
+
+                <div class="driver-status normal">
+
+                    <div class="status-icon">
+                        ✓
+                    </div>
+
+
+                    <div>
+
+                        <h3 id="driverStatus">
+                            NORMAL
+                        </h3>
+
+                        <p id="statusMessage">
+                            Driver appears to be awake
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="info-item">
+
+                        <span>
+                            Eye Status
+                        </span>
+
+                        <strong id="eyeStatus">
+                            WAITING
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <span>
+                            Drowsiness Level
+                        </span>
+
+                        <strong id="drowsinessLevel">
+                            LOW
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <span>
+                            Alarm
+                        </span>
+
+                        <strong id="alarmStatus">
+                            OFF
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MONITORING INFORMATION -->
+
+        <section class="monitoring">
+
+            <h2>
+                Monitoring Information
+            </h2>
+
+
+            <div class="monitor-grid">
+
+                <div class="monitor-box">
+
+                    <span>
+                        Face Detection
+                    </span>
+
+                    <strong id="faceStatus">
+                        Waiting
+                    </strong>
+
+                </div>
+
+
+                <div class="monitor-box">
+
+                    <span>
+                        Eye Detection
+                    </span>
+
+                    <strong id="eyeDetection">
+                        Waiting
+                    </strong>
+
+                </div>
+
+
+                <div class="monitor-box">
+
+                    <span>
+                        Monitoring Time
+                    </span>
+
+                    <strong id="timer">
+                        00:00
+                    </strong>
+
+                </div>
+
+
+                <div class="monitor-box">
+
+                    <span>
+                        System
+                    </span>
+
+                    <strong id="systemStatus">
+                        READY
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- LIVE AI ANALYSIS -->
+
+        <section class="ai-analysis">
+
+            <h2>
+                Live AI Analysis
+            </h2>
+
+
+            <div class="ai-grid">
+
+                <div class="ear-card">
+
+                    <span>
+                        Eye Aspect Ratio (EAR)
+                    </span>
+
+                    <strong id="earValue">
+                        0.00
+                    </strong>
+
+                    <small id="earState">
+                        Waiting for detection
+                    </small>
+
+                </div>
+
+
+                <div class="graph-card">
+
+                    <span>
+                        Live Eye Activity
+                    </span>
+
+                    <canvas
+                        id="earGraph"
+                        width="700"
+                        height="220">
+                    </canvas>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- EVENT LOG -->
+
+        <section class="event-log-section">
+
+            <div class="event-log-header">
+
+                <h2>
+                    Event Log
+                </h2>
+
+                <span id="eventCount">
+                    0 Events
+                </span>
+
+            </div>
+
+
+            <div
+                class="event-log"
+                id="eventLog">
+
+                <div class="empty-log">
+                    No events recorded yet.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- STATISTICS -->
+
+        <section class="statistics">
+
+            <h2>
+                Monitoring Statistics
+            </h2>
+
+
+            <div class="statistics-grid">
+
+                <div class="stat-box">
+
+                    <span>
+                        Drowsiness Events
+                    </span>
+
+                    <strong id="drowsinessEvents">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-box">
+
+                    <span>
+                        Alarm Activations
+                    </span>
+
+                    <strong id="alarmActivations">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-box">
+
+                    <span>
+                        Eyes Closed Time
+                    </span>
+
+                    <strong id="eyesClosedTime">
+                        00:00
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-box">
+
+                    <span>
+                        Current Status
+                    </span>
+
+                    <strong id="currentStatus">
+                        NORMAL
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            Driver Drowsiness Detection System
+        </p>
+
+        <p>
+            College Project • HTML • CSS • JavaScript
+        </p>
+
+    </footer>
+
+
+    <script
+        type="module"
+        src="03script.js">
+    </script>
+
+</body>
+
+</html>
